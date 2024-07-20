@@ -1,0 +1,14 @@
+a {
+  text-decoration: none;
+  font-size: large;
+}
+
+#btn {
+  background-color: white;
+  color: blueviolet;
+  border-color: blanchedalmond;
+}
+
+p {
+  text-align: justify;
+}
