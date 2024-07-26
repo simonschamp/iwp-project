@@ -44,6 +44,8 @@ let fetchData = async () => {
 
 fetchData();
 
+let chart;
+
 let buildChart = async () => {
   let data = await fetchData();
   //console.log(data);
@@ -71,7 +73,7 @@ let buildChart = async () => {
     labels: labels,
     datasets: parties,
   };
-  let chart = new frappe.Chart("#chart", {
+  chart = new frappe.Chart("#chart", {
     title:
       "Figure 1: Finnish municipal elections, support for parties, 1976-2021",
     data: chartData,
@@ -90,4 +92,10 @@ let buildChart = async () => {
     ],
   });
 };
+
+let downloadbtn = document.getElementById("chartDownload");
+downloadbtn.addEventListener("click", () => {
+  chart.export();
+});
+
 buildChart();
