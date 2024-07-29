@@ -1,3 +1,20 @@
+@media (max-width: 360px) {
+  body {
+    width: 340px;
+    margin: 5px;
+    padding: auto;
+  }
+
+  #chart {
+    width: 100%;
+    padding: auto;
+  }
+
+  #map {
+    width: 100%;
+  }
+}
+
 a {
   text-decoration: none;
   font-size: large;
@@ -17,12 +34,25 @@ div {
   padding: 0;
 }
 
-/*body {
-  margin: 0;
+body {
+  margin: 5px;
   padding: 0;
-} */
+}
 
 #map {
   height: 97vh;
   margin-top: 15px;
+}
+
+.my-buttons {
+  margin: auto;
+  width: 50%;
+}
+#comment {
+  margin: auto;
+  width: 50%;
+}
+
+h3 {
+  text-align: justify;
 }

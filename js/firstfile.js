@@ -41,22 +41,64 @@ let fetchData = async () => {
   //console.log(data);
   return data;
 };
-
 fetchData();
 
+let jQuery2 = {
+  query: [
+    {
+      code: "Alue",
+      selection: {
+        filter: "item",
+        values: ["SSS"],
+      },
+    },
+    {
+      code: "Tiedot",
+      selection: {
+        filter: "item",
+        values: ["vaesto"],
+      },
+    },
+  ],
+  response: {
+    format: "json-stat2",
+  },
+};
+
+let fetchPopData = async () => {
+  let url =
+    "https://statfin.stat.fi:443/PxWeb/api/v1/en/StatFin/vaerak/statfin_vaerak_pxt_11ra.px";
+  let res = await fetch(url, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(jQuery2),
+  });
+  //console.log(url);
+  if (!res.ok) return;
+  let popData = await res.json();
+  //console.log(popData);
+  return popData;
+};
+fetchPopData();
+
 let chart;
+let labelsPop;
+let valuesPop;
+let chartData;
 
 let buildChart = async () => {
   let data = await fetchData();
   //console.log(data);
+  let popData = await fetchPopData();
 
   let parties = Object.values(data.dimension.Puolue.category.label);
-  let labels = Object.values(data.dimension.Vuosi.category.label);
-  let values = data.value;
 
-  //console.log(parties);
-  //console.log(labels);
-  //console.log(values);
+  let labels = Object.values(data.dimension.Vuosi.category.label);
+  labelsPop = Object.values(popData.dimension.Vuosi.category.label);
+  //console.log(labelsPop);
+  let values = data.value;
+  valuesPop = popData.value;
+  //console.log(valuesPop);
 
   parties.forEach((party, index) => {
     let partyVote = [];
@@ -69,11 +111,14 @@ let buildChart = async () => {
     };
   });
   //console.log(parties);
-  let chartData = {
+  chartData = {
     labels: labels,
     datasets: parties,
   };
+  //console.log(chartData.datasets);
+
   chart = new frappe.Chart("#chart", {
+    //maintainAspectRatio: false,
     title:
       "Figure 1: Finnish municipal elections, support for parties, 1976-2021",
     data: chartData,
@@ -82,9 +127,9 @@ let buildChart = async () => {
     height: 400,
     colors: [
       "#f54b4b",
-      "#ffde55",
       "#006288",
       "#349a2b",
+      "#ffde55",
       "#61bf1a",
       "#f00a64",
       "#ffdd93",
@@ -92,10 +137,20 @@ let buildChart = async () => {
     ],
   });
 };
+/*const selectChange = document.getElementById("select-change");
+selectChange.addEventListener("change", selectionChanger);
+function selectionChanger() {
+  
+  (chartData = {
+    labels: labelsPop,
+    datasets: valuesPop,
+  }),
+    chart.update();}*/
+
+//selectionChanger();
+buildChart();
 
 let downloadbtn = document.getElementById("chartDownload");
 downloadbtn.addEventListener("click", () => {
   chart.export();
 });
-
-buildChart();
