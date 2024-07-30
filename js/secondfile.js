@@ -109,7 +109,7 @@ let getData = async () => {
     headers: { "content-type": "application/json" },
     body: JSON.stringify(jsonQuery),
   });
-  //console.log(url);
+
   if (!res.ok) return;
   let data = await res.json();
   return data;
@@ -124,7 +124,6 @@ let getData2 = async () => {
     headers: { "content-type": "application/json" },
     body: JSON.stringify(jsonQuery2),
   });
-  //console.log(url);
 
   if (!res.ok) return;
   let data2 = await res.json();
@@ -186,10 +185,10 @@ let fetchPopData = async () => {
     headers: { "content-type": "application/json" },
     body: JSON.stringify(jQuery2),
   });
-  //console.log(url);
+
   if (!res.ok) return;
   let popData = await res.json();
-  //console.log(popData);
+
   return popData;
 };
 fetchPopData();
@@ -201,23 +200,15 @@ let valuesPop;
 let buildChart = async () => {
   let data = await getData();
   let data2 = await getData2();
-  //console.log(data2);
 
   let popData = await fetchPopData();
-  //console.log(popData);
-
-  //let labelsPop =
 
   let labels = Object.values(data.dimension.Vuosi.category.label);
   let labelsPop = Object.values(popData.dimension.Vuosi.category.label);
-  //console.log(labels);
-  //console.log(labelsPop);
 
   let values = data.value;
   let unempValue = data2.value;
   valuesPop = popData.value;
-  //console.log(unempValue);
-  //console.log(valuesPop);
 
   chartData = {
     labels: labels,
@@ -235,11 +226,9 @@ let buildChart = async () => {
       },
     ],
   };
-  //chartData.datasets[1].values;
-  //console.log(chartData.datasets[0].values);
-  //console.log(chartData.datasets[1].values);
+
   chart = new frappe.Chart("#chart", {
-    title: "Figure 2: Employed vs. Unemployed jobseekers 2007-2022",
+    title: "Figure 2: Employed vs Unemployed jobseekers 2007-2022",
     data: chartData,
     type: "bar",
     height: 450,
@@ -247,19 +236,9 @@ let buildChart = async () => {
   });
 };
 
-/*let updateBtn = document.getElementById("select-change");
-updateBtn.addEventListener("click", selectionChanger);
-function selectionChanger() {
-  //console.log(selectChange.value);
-  //console.log(chartData.datasets[1].values);
-  //console.log(valuesPop);
-  chartData.datasets[1].values = valuesPop;
-  chart.update();}*/
-
-/*//selectionChanger();
 let downloadbtn = document.getElementById("chartDownload");
 downloadbtn.addEventListener("click", () => {
   chart.export();
-});*/
+});
 
 buildChart();

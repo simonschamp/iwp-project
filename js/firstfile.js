@@ -35,10 +35,10 @@ let fetchData = async () => {
     headers: { "content-type": "application/json" },
     body: JSON.stringify(jsonQuery),
   });
-  //console.log(url);
+
   if (!res.ok) return;
   let data = await res.json();
-  //console.log(data);
+
   return data;
 };
 fetchData();
@@ -73,10 +73,10 @@ let fetchPopData = async () => {
     headers: { "content-type": "application/json" },
     body: JSON.stringify(jQuery2),
   });
-  //console.log(url);
+
   if (!res.ok) return;
   let popData = await res.json();
-  //console.log(popData);
+
   return popData;
 };
 fetchPopData();
@@ -88,17 +88,16 @@ let chartData;
 
 let buildChart = async () => {
   let data = await fetchData();
-  //console.log(data);
+
   let popData = await fetchPopData();
 
   let parties = Object.values(data.dimension.Puolue.category.label);
 
   let labels = Object.values(data.dimension.Vuosi.category.label);
   labelsPop = Object.values(popData.dimension.Vuosi.category.label);
-  //console.log(labelsPop);
+
   let values = data.value;
   valuesPop = popData.value;
-  //console.log(valuesPop);
 
   parties.forEach((party, index) => {
     let partyVote = [];
@@ -110,12 +109,11 @@ let buildChart = async () => {
       values: partyVote,
     };
   });
-  //console.log(parties);
+
   chartData = {
     labels: labels,
     datasets: parties,
   };
-  //console.log(chartData.datasets);
 
   chart = new frappe.Chart("#chart", {
     //maintainAspectRatio: false,
@@ -137,17 +135,7 @@ let buildChart = async () => {
     ],
   });
 };
-/*const selectChange = document.getElementById("select-change");
-selectChange.addEventListener("change", selectionChanger);
-function selectionChanger() {
-  
-  (chartData = {
-    labels: labelsPop,
-    datasets: valuesPop,
-  }),
-    chart.update();}*/
 
-//selectionChanger();
 buildChart();
 
 let downloadbtn = document.getElementById("chartDownload");

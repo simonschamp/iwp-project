@@ -3,7 +3,6 @@ let fetchData = async () => {
     "https://geo.stat.fi/geoserver/wfs?service=WFS&version=2.0.0&request=GetFeature&typeName=tilastointialueet:kunta4500k&outputFormat=json&srsName=EPSG:4326";
   let res = await fetch(url);
   let data = await res.json();
-  //console.log(data);
 
   initMap(data);
 };
@@ -15,7 +14,6 @@ let initMap = (data) => {
 
   let geoJson = L.geoJSON(data, {
     onEachFeature: getFeature,
-    //onEachFeature: getPsValue,
     //style: getStyle,
   }).addTo(map);
 
@@ -41,14 +39,8 @@ let getFeature = (feature, layer) => {
   if (!feature.properties.name) return;
   let name = feature.properties.name;
   layer.bindPopup("This is " + name);
-  //console.log(name);
-  layer.bindTooltip(name).openTooltip();
 
-  /*layer.bindPopup(
-    `<ul>
-      <li>Positive: ${dataPs[value - 1].value}</li>
-    </ul>`
-  );*/
+  layer.bindTooltip(name).openTooltip();
 };
 
 // Printing the map
