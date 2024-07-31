@@ -121,7 +121,7 @@ let buildChart = async () => {
       "Figure 1: Finnish municipal elections, support for parties, 1976-2021",
     data: chartData,
     //type: "bar",
-    type: "line",
+    type: "axis-mixed",
     height: 400,
     colors: [
       "#f54b4b",

@@ -196,6 +196,7 @@ fetchPopData();
 let chart;
 let chartData;
 let valuesPop;
+let newChartData;
 
 let buildChart = async () => {
   let data = await getData();
@@ -226,15 +227,42 @@ let buildChart = async () => {
       },
     ],
   };
-
   chart = new frappe.Chart("#chart", {
-    title: "Figure 2: Employed vs Unemployed jobseekers 2007-2022",
+    title:
+      "Figure 2: Employed vs Unemployed, and Employed vs Total population 200-2022",
     data: chartData,
     type: "bar",
     height: 450,
     colors: ["#69f542", "#f5ef42"],
   });
+
+  newChartData = {
+    labels: labels,
+    datasets: [
+      {
+        name: "Employed",
+        type: "bar",
+        values: values,
+      },
+      {
+        name: "Population",
+        type: "bar",
+        //values: unempValue,
+        values: valuesPop,
+      },
+    ],
+  };
 };
+
+let btnPopulation = document.getElementById("employ-popu");
+btnPopulation.addEventListener("click", () => {
+  chart.update(newChartData);
+});
+
+let btnEmpUemp = document.getElementById("employ-unemploy");
+btnEmpUemp.addEventListener("click", () => {
+  chart.update(chartData);
+});
 
 let downloadbtn = document.getElementById("chartDownload");
 downloadbtn.addEventListener("click", () => {
