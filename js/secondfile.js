@@ -257,6 +257,7 @@ let buildChart = async () => {
 let btnPopulation = document.getElementById("employ-popu");
 btnPopulation.addEventListener("click", () => {
   chart.update(newChartData);
+  //chart.update((chart.title = "This is the new title"));
 });
 
 let btnEmpUemp = document.getElementById("employ-unemploy");
